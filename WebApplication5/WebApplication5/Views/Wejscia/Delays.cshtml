@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebApplication5.Models.Wejscia>
+
+@{
+    ViewData["Title"] = "Delays";
+}
+
+@if (User.Identity.IsAuthenticated && User.Claims.FirstOrDefault(c => c.Type == "Role")?.Value == "Prezes" || User.Claims.FirstOrDefault(c => c.Type == "Role")?.Value == "Specjalista")
+
+{
+    <h1>Spóźnienia</h1>
+
+    @using (Html.BeginForm())
+    {
+        <p>
+            <input name="data" type="date" value="Search" />
+            <input type="submit" value="Search" />
+
+        </p>
+    }
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPracownikNavigation.Imie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPracownikNavigation.Nazwisko)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataWejscia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GodzinaWejscia)
+            </th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdPracownikNavigation.Imie)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdPracownikNavigation.Nazwisko)
+                    </td>
+                    <td>
+                        @item.DataWejscia.ToString("yyyy-MM-dd")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GodzinaWejscia)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
